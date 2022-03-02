@@ -1,24 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+// import logo from "./logo.svg";
+import "./App.css";
+import { useSelector, useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
+import { actionCreators } from "./state/index";
+import { Box, Button, ButtonGroup, Container, Typography } from "@mui/material";
 
 function App() {
+  const account = useSelector((state) => state.account);
+  const dispatch = useDispatch();
+  const { depositMoney, withdrawMoney } = bindActionCreators(
+    actionCreators,
+    dispatch
+  );
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container maxWidth="sm">
+      <Box justifyContent="center">
+        <Typography variant="h5" component="h5">
+          {account}
+        </Typography>
+        <ButtonGroup>
+          <Button onClick={() => withdrawMoney(100)}>-</Button>
+          <Button onClick={() => depositMoney(3000)}>+</Button>
+        </ButtonGroup>
+      </Box>
+    </Container>
   );
 }
 
